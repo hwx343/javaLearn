@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>studentInfoManage</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+    
+  <servlet>
+  	<servlet-name>loginServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>loginServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>classInfoServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.ClassInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>classInfoServlet</servlet-name>
+  	<url-pattern>/gradelist</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>classDelServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.ClassDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>classDelServlet</servlet-name>
+  	<url-pattern>/gradedel</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>classSaveServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.ClassSaveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>classSaveServlet</servlet-name>
+  	<url-pattern>/gradeSave</url-pattern>
+  </servlet-mapping>
+</web-app>
