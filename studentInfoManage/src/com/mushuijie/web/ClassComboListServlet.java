@@ -17,7 +17,7 @@ import com.mushuijie.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class ClassInfoServlet extends HttpServlet{
+public class ClassComboListServlet extends HttpServlet{
 	ClassInfoDao cld=new ClassInfoDaoImpl();
 	DBUtil db=new DBUtil();
 	@Override
@@ -28,25 +28,14 @@ public class ClassInfoServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tempPage=request.getParameter("page");
-		String tempRows=request.getParameter("rows");
-		PageBean pg=null;
-		if(tempPage!=null&&tempRows!=null){
-			int page=Integer.parseInt(tempPage);
-			int rows=Integer.parseInt(tempRows);
-			pg=new PageBean(page,rows);
-		}		
-		String className=request.getParameter("className");
-		if(className==null){
-			className="";
-		}
-		JSONObject result = new JSONObject();
+		// TODO Auto-generated method stub
 		Connection conn=db.openConnection();
-		JSONArray jarr=this.cld.listClassInfo(conn,pg,className);
-		int total=cld.getClassCount(conn,className);
-		result.put("rows", jarr);
-		result.put("total", total);
-		ResponseUtil.write(response, result);
+		JSONArray jarr=this.cld.listClassInfo(conn,null,null);
+		JSONObject jsonObject=new JSONObject();
+		jsonObject.put("className", "请选择...");
+		jarr.add(jsonObject);
+		int total=cld.getClassCount(conn,null);
+		ResponseUtil.write(response, jarr);
 		db.closeConnection(conn);
 		
 		

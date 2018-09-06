@@ -18,8 +18,10 @@ import net.sf.json.JSONArray;
 public class StudentInfoDaoImpl implements StudentInfoDao{
 	@Override
 	public JSONArray listStudentInfo(Connection conn, PageBean pg) {
-		StringBuffer sql=new StringBuffer("select s.id,s.stuNo,s.stuName,s.sex,s.birthday,"
-				+ "g.className,s.email,s.stuDesc from studentInfoTbl s,classtbl g "
+//		StringBuffer sql=new StringBuffer("select s.id,s.stuNo,s.stuName,s.sex,s.birthday,"
+//				+ "g.className,s.email,s.stuDesc from studentInfoTbl s,classtbl g "
+//				+ "where s.gradeId=g.id");
+		StringBuffer sql=new StringBuffer("select * from studentInfoTbl s,classtbl g "
 				+ "where s.gradeId=g.id");
 		if(pg!=null){
 			String condition1=" limit "+pg.getStart()+","+pg.getRows();
@@ -146,7 +148,7 @@ public class StudentInfoDaoImpl implements StudentInfoDao{
 	@Override
 	public int studentModify(Connection conn, StudentBean stu) {
 		String editSql="update studentInfoTbl set stuNo=?,stuName=?,sex=?,birthday=?,gradeId=?"
-				+ ",email=?,stuDesc=? where id=?";
+				+ ",email=?,stuDesc=? where stuId=?";
 		String stuNo=stu.getStuNo();
 		String stuName=stu.getStuName();
 		String sex=stu.getSex();
@@ -154,7 +156,7 @@ public class StudentInfoDaoImpl implements StudentInfoDao{
 		int gradeId=stu.getGradeId();
 		String email=stu.getEmail();
 		String stuDesc=stu.getStuDesc();
-		int id=stu.getId();
+		int id=stu.getStuId();
 		PreparedStatement ppst=null;
 		try {
 			ppst=conn.prepareStatement(editSql);

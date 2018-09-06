@@ -1,5 +1,6 @@
 package com.mushuijie.util;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -17,7 +18,12 @@ public class JsonUtil {
 					int num=rsmd.getColumnCount();
 					JSONObject job=new JSONObject();
 					for(int i=1;i<=num;i++){
-						job.put(rsmd.getColumnName(i), rs.getObject(i));
+						Object ob=rs.getObject(i);
+						if(ob instanceof java.sql.Date){
+							job.put(rsmd.getColumnName(i), DateUtil.chDate2String((Date) ob));
+						}else{
+							job.put(rsmd.getColumnName(i), ob);
+						}				
 					}
 					jarr.add(job);
 				}

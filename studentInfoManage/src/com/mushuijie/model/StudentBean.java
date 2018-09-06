@@ -20,7 +20,7 @@ import java.sql.Date;
  *
  */
 public class StudentBean {
-	private int id;
+	private int stuId;
 	private String stuNo;
 	private String stuName;
 	private String sex;
@@ -28,11 +28,12 @@ public class StudentBean {
 	private int gradeId;
 	private String email;
 	private String stuDesc;
-	public int getId() {
-		return id;
+	
+	public int getStuId() {
+		return stuId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
 	}
 	public String getStuNo() {
 		return stuNo;

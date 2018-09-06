@@ -29,6 +29,24 @@
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>ClassComboListServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.ClassComboListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ClassComboListServlet</servlet-name>
+  	<url-pattern>/gradeCombolist</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.StudentInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentInfoServlet</servlet-name>
+  	<url-pattern>/studentlist</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
   	<servlet-name>classDelServlet</servlet-name>
   	<servlet-class>com.mushuijie.web.ClassDelServlet</servlet-class>
   </servlet>

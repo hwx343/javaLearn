@@ -25,32 +25,33 @@ public class ClassInfoDaoImpl implements ClassInfoDao{
 		}		
 		if(pg!=null){
 			sb=sb.append(" limit "+pg.getStart()+","+pg.getRows());
-			PreparedStatement ppst=null;
-			ResultSet rs=null;
+		}
+		PreparedStatement ppst=null;
+		ResultSet rs=null;
+		try {
+			ppst=conn.prepareStatement(sb.toString().replaceFirst("and", "where"));
+			rs=ppst.executeQuery();
+			JSONArray jarr=JsonUtil.resultSet2Json(rs);
+			return jarr;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
 			try {
-				ppst=conn.prepareStatement(sb.toString().replaceFirst("and", "where"));
-				rs=ppst.executeQuery();
-				JSONArray jarr=JsonUtil.resultSet2Json(rs);
-				return jarr;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally{
-				try {
-					if(rs!=null){
-						rs.close();
-					}
-					if(ppst!=null){
-						ppst.close();
-					}
-				} catch (Exception e2) {
-					e2.printStackTrace();
+				if(rs!=null){
+					rs.close();
 				}
-				
+				if(ppst!=null){
+					ppst.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 			
-			
 		}
+			
+			
+		
 		return null;
 	}
 
