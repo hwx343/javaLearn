@@ -12,17 +12,40 @@ import com.mushuijie.model.PageBean;
 import com.mushuijie.model.StudentBean;
 import com.mushuijie.util.DBUtil;
 import com.mushuijie.util.JsonUtil;
+import com.mushuijie.util.StringUtil;
 
 import net.sf.json.JSONArray;
 
 public class StudentInfoDaoImpl implements StudentInfoDao{
 	@Override
-	public JSONArray listStudentInfo(Connection conn, PageBean pg) {
+	public JSONArray listStudentInfo(Connection conn, PageBean pg,StudentBean student,
+			String begbirthday,String endbirthday) {
 //		StringBuffer sql=new StringBuffer("select s.id,s.stuNo,s.stuName,s.sex,s.birthday,"
 //				+ "g.className,s.email,s.stuDesc from studentInfoTbl s,classtbl g "
 //				+ "where s.gradeId=g.id");
 		StringBuffer sql=new StringBuffer("select * from studentInfoTbl s,classtbl g "
 				+ "where s.gradeId=g.id");
+		if(student!=null){
+			if(!StringUtil.isEmpty(student.getStuNo())){
+				sql=sql.append(" and stuNo like '%"+student.getStuNo()+"%'");
+			}
+			if(!StringUtil.isEmpty(student.getStuName())){
+				sql=sql.append(" and stuName like '%"+student.getStuName()+"%'");
+			}
+			if(!StringUtil.isEmpty(student.getSex())){
+				sql=sql.append(" and sex like '%"+student.getSex()+"%'");
+			}
+			if(!StringUtil.isEmpty(begbirthday)){
+				sql=sql.append(" and DATE(s.birthday) >=DATE('"+begbirthday+"')");
+			}
+			if(!StringUtil.isEmpty(endbirthday)){
+				sql=sql.append(" and DATE(s.birthday) <=DATE('"+endbirthday+"')");
+			}
+			if(student.getGradeId()!=-1){
+				sql=sql.append(" and gradeId like '%"+student.getGradeId()+"%'");
+			}
+		}
+		
 		if(pg!=null){
 			String condition1=" limit "+pg.getStart()+","+pg.getRows();
 			PreparedStatement ppst=null;
@@ -51,16 +74,35 @@ public class StudentInfoDaoImpl implements StudentInfoDao{
 	}
 
 	@Override
-	public int getStudentCount(Connection conn, String stuName) {
-		String sql="select count(*) as count from studentInfoTbl";
-		if(stuName!=null&&!(stuName.trim().equals(""))){
-			sql=sql+" and stuName likes "+stuName;
+	public int getStudentCount(Connection conn, PageBean pg,StudentBean student,
+			String begbirthday,String endbirthday) {
+		StringBuffer sql=new StringBuffer("select count(*) as count from studentInfoTbl");
+		if(student!=null){
+			if(!StringUtil.isEmpty(student.getStuNo())){
+				sql=sql.append(" and stuNo like '%"+student.getStuNo()+"%'");
+			}
+			if(!StringUtil.isEmpty(student.getStuName())){
+				sql=sql.append(" and stuName like '%"+student.getStuName()+"%'");
+			}
+			if(!StringUtil.isEmpty(student.getSex())){
+				sql=sql.append(" and sex like '%"+student.getSex()+"%'");
+			}
+			if(!StringUtil.isEmpty(begbirthday)){
+				sql=sql.append(" and DATE(s.birthday) >=DATE('"+begbirthday+"')");
+			}
+			if(!StringUtil.isEmpty(endbirthday)){
+				sql=sql.append(" and DATE(s.birthday) <=DATE('"+endbirthday+"')");
+			}
+			if(student.getGradeId()!=-1){
+				sql=sql.append(" and gradeId like '%"+student.getGradeId()+"%'");
+			}
 		}
+		
 		Statement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=conn.createStatement();
-			rs=stmt.executeQuery(sql.replaceFirst("and","where"));
+			rs=stmt.executeQuery(sql.toString().replaceFirst("and","where"));
 			if(rs.next()){
 				int result=rs.getInt(1);
 				return result;
@@ -86,7 +128,7 @@ public class StudentInfoDaoImpl implements StudentInfoDao{
 
 	@Override
 	public int studentDelete(Connection conn, String stuId) {
-		String dslSql="delete from studentInfoTbl where id in ("+stuId+")";
+		String dslSql="delete from studentInfoTbl where stuId in ("+stuId+")";
 		Statement stmt=null;
 		try {
 			stmt=conn.createStatement();

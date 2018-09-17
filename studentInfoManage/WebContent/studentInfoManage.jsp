@@ -11,7 +11,42 @@
 <script type="text/javascript" src="jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-
+	function searchStudent(){
+		$("#dg").datagrid('load',{
+			stuNo:$("#s_stuNo").val(),
+			stuName:$("#s_stuName").val(),
+			sex:$("#s_sex").combobox('getValue'),
+			begbirthday:$("#s_begbirthday").datebox('getValue'),
+			endbirthday:$("#s_endbirthday").datebox("getValue"),
+			gradeId:$("#s_gradeId").combobox('getValue'),
+		})
+	}
+	
+	function studentDelete(){
+		var selectRows=$("#dg").datagrid('getSelections');
+		if(selectRows.length==0){
+			$.messager.alert("系统提示","你选择的数据为空！");
+			return;
+		}
+		var strids=[];
+		for(var i=0;i<selectRows.length;i++){
+			strids.push(selectRows[i].stuId);
+		}
+		var ids=strids.join(",");
+		console.log(ids);
+		$.messager.confirm("系统提示","您确认想要删除<font color=red>"+selectRows.length+"</font>条记录吗？",function(r){
+			if(r){
+				$.post("studentdel",{stuId:ids},function(result){
+					if(result.success){
+						$.messager.alert("系统提示","你已成功删除<font color=red>"+result.delNums+"</font>条记录");
+						$("#dg").datagrid("reload");  
+					}else{
+						$.messager.alert("系统提示",result.errormsg);// 重新载入当前页面数据  
+					}
+				},"json")
+			}
+		});		
+	}
 </script>
 <style type="text/css">
 th{
@@ -39,9 +74,9 @@ th{
 
 <div id="tb">
 	<div  align="left" style="float:left">
-		<a href="javascript:openGradeDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
-		<a href="javascript:openModifyGradeDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
-		<a href="javascript:gradedelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+		<a href="javascript:openStudentDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
+		<a href="javascript:openModifyStudentDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
+		<a href="javascript:studentDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 	</div>
 	<div align="right">
 		&nbsp;学号:&nbsp;<input type="text" id="s_stuNo" name="s_stuNo" size="10"/>
@@ -53,9 +88,10 @@ th{
 		</select>
 		&nbsp;出生日期:&nbsp;<input type="text" class="easyui-datebox" id="s_begbirthday" name="s_begbirthday" size="12"/>->
 		<input type="text" class="easyui-datebox" id="s_endbirthday" name="s_endbirthday" size="12"/>
-		&nbsp;所属班级:&nbsp;<input type="text" class="easyui-combobox" id="s_gradeName" name="s_gradeName" panelHeight="auto" size="8" 
+		&nbsp;所属班级:&nbsp;<input type="text" class="easyui-combobox" id="s_gradeId" name="s_gradeId" panelHeight="auto" size="8" 
 		data-options="editable:false,valueField:'id',textField:'className',url:'gradeCombolist'"/>
-		<a id="addbtn" href="javascript:searchData()" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
+		<a id="addbtn" href="javascript:searchStudent()" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
+		
 	</div>		
 </div>
 </body>

@@ -54,6 +54,15 @@
   	<servlet-name>classDelServlet</servlet-name>
   	<url-pattern>/gradedel</url-pattern>
   </servlet-mapping>
+ 
+  <servlet>
+  	<servlet-name>studentDelServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.StudentDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentDelServlet</servlet-name>
+  	<url-pattern>/studentdel</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>classSaveServlet</servlet-name>

@@ -13,8 +13,10 @@ import com.mushuijie.dao.StudentInfoDao;
 import com.mushuijie.impl.ClassInfoDaoImpl;
 import com.mushuijie.impl.StudentInfoDaoImpl;
 import com.mushuijie.model.PageBean;
+import com.mushuijie.model.StudentBean;
 import com.mushuijie.util.DBUtil;
 import com.mushuijie.util.ResponseUtil;
+import com.mushuijie.util.StringUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -30,18 +32,30 @@ public class StudentInfoServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String stuNo=request.getParameter("stuNo");
+		String stuName=request.getParameter("stuName");
+		String sex=request.getParameter("sex");
+		String begbirthday=request.getParameter("begbirthday");
+		String endbirthday=request.getParameter("endbirthday");
+		String gradeId=request.getParameter("gradeId");
+		StudentBean student=null;
+//		if(!StringUtil.isEmpty(stuNo)){
+			student=new StudentBean();
+			student.setStuNo(stuNo);
+			student.setStuName(stuName);
+			student.setSex(sex);
+			if(!StringUtil.isEmpty(gradeId)){
+				student.setGradeId(Integer.parseInt(gradeId));	
+			}					
+//		}
+		
 		int page=Integer.parseInt(request.getParameter("page"));
 		int rows=Integer.parseInt(request.getParameter("rows"));
-		String stuName=request.getParameter("stuName");
-		if(stuName==null){
-			stuName="";
-		}
 		PageBean pg=new PageBean(page,rows);
 		JSONObject result = new JSONObject();
 		Connection conn=db.openConnection();
-		JSONArray jarr=this.stuDao.listStudentInfo(conn,pg);
-		int total=stuDao.getStudentCount(conn, stuName);
+		JSONArray jarr=this.stuDao.listStudentInfo(conn,pg,student,begbirthday,endbirthday);
+		int total=stuDao.getStudentCount(conn,pg,student,begbirthday,endbirthday);
 		result.put("rows", jarr);
 		result.put("total", total);
 		ResponseUtil.write(response, result);

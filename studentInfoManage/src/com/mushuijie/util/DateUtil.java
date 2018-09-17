@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 public class DateUtil {
 	
 	public static String chDate2String(Date date){
-		String format = "yyyy-mm-dd";
+		String format = "yyyy-MM-dd";
 		if(date!=null){
 			SimpleDateFormat sdf = new SimpleDateFormat(format); 
-			return sdf.format(date);
+			String result=sdf.format(date);
+//			System.out.println(result);
+			return result;
 		}
 		return null; 		
 	}
