@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mushuijie.dao.ClassInfoDao;
+import com.mushuijie.dao.StudentInfoDao;
 import com.mushuijie.impl.ClassInfoDaoImpl;
+import com.mushuijie.impl.StudentInfoDaoImpl;
 import com.mushuijie.util.DBUtil;
 import com.mushuijie.util.ResponseUtil;
 
@@ -25,8 +27,21 @@ public class ClassDelServlet extends HttpServlet{
 		ClassInfoDao cld=new ClassInfoDaoImpl();
 		DBUtil db=new DBUtil();
 		Connection conn=db.openConnection();
-		int delNums=cld.classDelete(conn, classID);
 		JSONObject result = new JSONObject();
+		
+		StudentInfoDao stdd=new StudentInfoDaoImpl();
+		String[] delId=classID.split(",");
+		for(int i=0;i<delId.length;i++){
+			String str=delId[i];
+			if(stdd.getStudentBygradeId(conn, str)){
+				result.put("errorIndex", i);
+				result.put("errormsg", "班级还有未删除的学生！");
+				ResponseUtil.write(response, result);
+				db.closeConnection(conn);
+				return;
+			}
+		}
+		int delNums=cld.classDelete(conn, classID);
 		if(delNums>0){
 			result.put("success", "true");
 			result.put("delNums", delNums);			

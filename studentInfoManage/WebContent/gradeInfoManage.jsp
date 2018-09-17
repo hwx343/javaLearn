@@ -36,10 +36,11 @@
 						$.messager.alert("系统提示","你已成功删除<font color=red>"+result.delNums+"</font>条记录");
 						$("#dg").datagrid("reload");  
 					}else{
-						$.messager.alert("系统提示",result.errormsg);// 重新载入当前页面数据  
+						$.messager.alert("系统提示",selectRows[result.errorIndex].className+result.errormsg);// 重新载入当前页面数据  
 					}
 				},"json")
 			}
+			$("#dg").datagrid('clearSelections');
 		});		
 	}
 	

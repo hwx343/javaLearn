@@ -227,4 +227,30 @@ public class StudentInfoDaoImpl implements StudentInfoDao{
 		return 0;
 	}
 
+	@Override
+	public boolean getStudentBygradeId(Connection conn, String gradeId) {
+		String sql="select * from studentInfoTbl where gradeId=?";
+		PreparedStatement ppst=null;
+		ResultSet rs=null;
+		try {
+			ppst=conn.prepareStatement(sql);
+			ppst.setString(1, gradeId);
+			rs=ppst.executeQuery();
+			if(rs.next()){
+				return true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				if(ppst!=null){
+					ppst.close();
+				}					
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 }

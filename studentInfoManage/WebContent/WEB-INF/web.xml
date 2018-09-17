@@ -72,4 +72,13 @@
   	<servlet-name>classSaveServlet</servlet-name>
   	<url-pattern>/gradeSave</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentSaveServlet</servlet-name>
+  	<servlet-class>com.mushuijie.web.StudentSaveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentSaveServlet</servlet-name>
+  	<url-pattern>/studentSave</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -14,4 +14,5 @@ public interface StudentInfoDao {
 	public int studentDelete(Connection conn,String stuId);
 	public int studentAdd(Connection conn,StudentBean stu);
 	public int studentModify(Connection conn,StudentBean stu);
+	public boolean getStudentBygradeId(Connection conn,String gradeId);
 }

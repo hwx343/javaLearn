@@ -29,6 +29,21 @@ public class StudentBean {
 	private String email;
 	private String stuDesc;
 	
+	public StudentBean(){
+		
+	}
+	
+	public StudentBean(String stuNo, String stuName, String sex, Date birthday, int gradeId, String email,
+			String stuDesc) {
+		this.stuNo = stuNo;
+		this.stuName = stuName;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.gradeId = gradeId;
+		this.email = email;
+		this.stuDesc = stuDesc;
+	}
+	
 	public int getStuId() {
 		return stuId;
 	}
