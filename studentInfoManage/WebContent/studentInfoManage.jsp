@@ -108,6 +108,14 @@
 			}
 		});
 	}
+	function resetCondition(){
+		$("#s_stuNo").val("");
+		$("#s_stuName").val("");
+		$("#s_sex").combobox("setValue","");
+		$("#s_begbirthday").datebox("setValue","");
+		$("#s_endbirthday").datebox("setValue","");
+		$("#s_gradeId").combobox("setValue","");
+	}
 	
 </script>
 <style type="text/css">
@@ -154,7 +162,7 @@ th{
 		&nbsp;所属班级:&nbsp;<input type="text" class="easyui-combobox" id="s_gradeId" name="s_gradeId" panelHeight="auto" size="8" 
 		data-options="editable:false,valueField:'id',textField:'className',url:'gradeCombolist'"/>
 		<a id="addbtn" href="javascript:searchStudent()" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
-		<a id="resetBtn" href="javascript:#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">重置</a>
+		<a id="resetBtn" href="javascript:resetCondition()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">重置</a>
 	</div>		
 </div>
 

@@ -33,7 +33,7 @@ public class ClassComboListServlet extends HttpServlet{
 		JSONArray jarr=this.cld.listClassInfo(conn,null,null);
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("className", "«Î—°‘Ò...");
-		jarr.add(jsonObject);
+		jarr.add(0,jsonObject);	
 		int total=cld.getClassCount(conn,null);
 		ResponseUtil.write(response, jarr);
 		db.closeConnection(conn);
